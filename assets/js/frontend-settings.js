@@ -11,6 +11,13 @@
       if (typeof TheMoakTryOn !== 'undefined') {
         clearInterval(checkInterval);
 
+        // Add a helper function to debug settings
+        TheMoakTryOn.debugSettings = function () {
+          console.log('Current Product ID:', this.currentProductId);
+          console.log('Product Settings:', this.productSettings);
+          console.log('Default Settings:', this.settings.optimized_settings);
+        };
+
         // Override the getProductData method to handle product-specific settings
         var originalGetProductData = TheMoakTryOn.getProductData;
         TheMoakTryOn.getProductData = function (productId) {
@@ -35,8 +42,13 @@
 
                 // Store product-specific settings if available
                 if (response.data.settings) {
+                  console.log(
+                    'Product settings received:',
+                    response.data.settings
+                  );
                   self.productSettings = response.data.settings;
                 } else {
+                  console.log('No product settings received, using defaults');
                   // Use default settings if none provided
                   self.productSettings = self.settings.optimized_settings;
                 }
@@ -173,13 +185,21 @@
           const settings =
             this.productSettings || this.settings.optimized_settings;
 
+          // Make sure settings are properly applied by parsing them as numbers
+          const posY = parseFloat(settings.positionY);
+          const posX = parseFloat(settings.positionX);
+          const sizeScale = parseFloat(settings.sizeScale);
+          const reflPos = parseFloat(settings.reflectionPos);
+          const reflSize = parseFloat(settings.reflectionSize);
+          const reflOpacity = parseFloat(settings.reflectionOpacity);
+          const shadowOpacity = parseFloat(settings.shadowOpacity);
+          const shadowOffset = parseFloat(settings.shadowOffset);
+
           // Apply settings to adjust position and size
-          const adjustedX = this.smooth.x + parseFloat(settings.positionX);
-          const adjustedY = this.smooth.y + parseFloat(settings.positionY);
-          const adjustedWidth =
-            this.smooth.width * parseFloat(settings.sizeScale);
-          const adjustedHeight =
-            this.smooth.height * parseFloat(settings.sizeScale);
+          const adjustedX = this.smooth.x + posX;
+          const adjustedY = this.smooth.y + posY;
+          const adjustedWidth = this.smooth.width * sizeScale;
+          const adjustedHeight = this.smooth.height * sizeScale;
 
           // Update instructions
           this.updateInstructions();
@@ -189,15 +209,11 @@
             this.ctx.save();
 
             // Use product-specific shadow offset if available
-            const shadowOffset = parseFloat(settings.shadowOffset || 10);
             this.ctx.translate(adjustedX, adjustedY + shadowOffset);
             this.ctx.rotate(this.smooth.angle);
 
             // Apply shadow based on depth and product-specific settings
             const shadowDepthOffset = 5 + this.smooth.depth * 2;
-
-            // Use product-specific shadow opacity if available
-            const shadowOpacity = parseFloat(settings.shadowOpacity || 0.4);
 
             // Draw shadow with slight offset and transparency
             this.ctx.globalAlpha = shadowOpacity;
@@ -233,20 +249,16 @@
             // Add reflection effect to lenses
             const baseReflectionOpacity = 0.15 + this.smooth.lightLevel * 0.25;
             // Use product-specific reflection opacity if available
-            const reflectionOpacity =
-              baseReflectionOpacity *
-              parseFloat(settings.reflectionOpacity || 0.7);
+            const reflectionOpacity = baseReflectionOpacity * reflOpacity;
 
             this.ctx.fillStyle = `rgba(255, 255, 255, ${reflectionOpacity})`;
             this.ctx.globalCompositeOperation = 'lighter';
 
             // Apply reflection position adjustment from product settings
-            const reflectionYOffset = parseFloat(settings.reflectionPos || 8);
+            const reflectionYOffset = reflPos;
 
             // Use product-specific reflection size if available
-            const reflectionSizeFactor = parseFloat(
-              settings.reflectionSize || 0.5
-            );
+            const reflectionSizeFactor = reflSize;
 
             // Identify lens centers more accurately
             const lensSize = adjustedWidth * 0.28 * reflectionSizeFactor;
