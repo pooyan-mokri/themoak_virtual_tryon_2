@@ -1,0 +1,274 @@
+/**
+ * TheMoak Virtual Try-on Frontend Styles
+ */
+
+/* Button Styles */
+.themoak-tryon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.themoak-tryon-button:hover {
+  background-color: #e0e0e0;
+}
+
+.themoak-tryon-button .dashicons {
+  margin-right: 8px;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.themoak-tryon-button-container {
+  margin: 15px 0;
+}
+
+/* Popup Styles */
+.themoak-tryon-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.themoak-tryon-popup.active {
+  opacity: 1;
+}
+
+.themoak-tryon-popup-inner {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Glassmorphism effect */
+.themoak-tryon-popup.glassmorphism .themoak-tryon-popup-inner {
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.themoak-tryon-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color 0.3s ease;
+}
+
+.themoak-tryon-close:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.themoak-tryon-header {
+  padding: 15px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.themoak-tryon-title {
+  margin: 0 0 5px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.themoak-tryon-product-name {
+  font-size: 14px;
+  color: #666;
+}
+
+.themoak-tryon-content {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Loading state */
+.themoak-tryon-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.themoak-tryon-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #3498db;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Webcam container */
+.themoak-tryon-webcam-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 75%; /* 4:3 aspect ratio */
+  overflow: hidden;
+}
+
+#themoak-tryon-webcam,
+#themoak-tryon-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: scaleX(-1); /* Mirror effect */
+  object-fit: cover;
+}
+
+#themoak-tryon-overlay {
+  z-index: 2;
+}
+
+/* Instructions */
+.themoak-tryon-instructions {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 3;
+}
+
+.themoak-tryon-instruction-text {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  text-align: center;
+  transition: opacity 0.5s ease;
+}
+
+/* Error state */
+.themoak-tryon-error {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 6;
+  padding: 20px;
+  text-align: center;
+}
+
+.themoak-tryon-error-icon {
+  font-size: 40px;
+  color: #e74c3c;
+  margin-bottom: 15px;
+}
+
+.themoak-tryon-error-message {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.themoak-tryon-retry-button {
+  padding: 8px 16px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.themoak-tryon-retry-button:hover {
+  background-color: #2980b9;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .themoak-tryon-popup-inner {
+    width: 95%;
+    max-height: 95vh;
+  }
+
+  .themoak-tryon-title {
+    font-size: 18px;
+  }
+
+  .themoak-tryon-product-name {
+    font-size: 13px;
+  }
+
+  .themoak-tryon-webcam-container {
+    padding-bottom: 100%; /* More square on mobile */
+  }
+}
+
+/* RTL Support */
+.rtl .themoak-tryon-button .dashicons {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+.rtl .themoak-tryon-close {
+  right: auto;
+  left: 10px;
+}
+
+/* Make sure the video and overlay are properly mirrored for both LTR and RTL */
+.rtl #themoak-tryon-webcam,
+.rtl #themoak-tryon-overlay {
+  transform: scaleX(
+    -1
+  ); /* Same as LTR, we want it mirrored regardless of text direction */
+}

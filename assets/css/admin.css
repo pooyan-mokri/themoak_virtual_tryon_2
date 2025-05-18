@@ -1,0 +1,239 @@
+/**
+ * TheMoak Virtual Try-on Admin Styles
+ */
+
+/* Settings page styles */
+.themoak-tryon-settings-page .form-table th {
+  padding: 20px 10px 20px 0;
+  width: 200px;
+}
+
+.themoak-tryon-settings-page .form-table td {
+  padding: 20px 10px;
+}
+
+.instruction-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.instruction-field {
+  display: flex;
+  align-items: center;
+}
+
+.instruction-field label {
+  width: 100px;
+  font-weight: 500;
+}
+
+.icon-preview {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  padding: 5px 10px;
+  background: #f7f7f7;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.color-picker {
+  width: 80px;
+}
+
+/* Products page styles */
+.themoak-tryon-products-table {
+  margin-top: 20px;
+}
+
+.themoak-tryon-products-table .column-image {
+  width: 150px;
+}
+
+.themoak-tryon-products-table .column-image img {
+  max-width: 100px;
+  max-height: 50px;
+  background: #f0f0f0;
+  padding: 5px;
+  border: 1px solid #ddd;
+}
+
+.themoak-tryon-products-table .column-enabled {
+  width: 100px;
+  text-align: center;
+}
+
+.themoak-tryon-products-table .column-actions {
+  width: 200px;
+}
+
+.themoak-tryon-toggle-wrap {
+  text-align: center;
+}
+
+/* Toggle Switch Styles */
+.themoak-tryon-toggle {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.themoak-tryon-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.themoak-tryon-toggle .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+}
+
+.themoak-tryon-toggle .slider:before {
+  position: absolute;
+  content: '';
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+.themoak-tryon-toggle input:checked + .slider {
+  background-color: #2196f3;
+}
+
+.themoak-tryon-toggle input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+.themoak-tryon-toggle input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.themoak-tryon-toggle .slider.round {
+  border-radius: 24px;
+}
+
+.themoak-tryon-toggle .slider.round:before {
+  border-radius: 50%;
+}
+
+.tryon-enabled td {
+  background-color: #f8ffff;
+}
+
+.no-image {
+  color: #999;
+  font-style: italic;
+}
+
+/* Product metabox */
+.options_group .form-field {
+  padding: 8px 10px 8px 162px !important;
+}
+
+#themoak-tryon-image-preview {
+  margin-top: 10px;
+  display: block;
+}
+
+#themoak-tryon-image-preview img {
+  max-width: 150px;
+  max-height: 150px;
+  background: #f0f0f0;
+  padding: 5px;
+  border: 1px solid #ddd;
+}
+
+/* RTL Support */
+.rtl .instruction-field label {
+  margin-right: 0;
+  margin-left: 10px;
+}
+
+/* Additional styles for search and filters */
+#product-search {
+  padding: 5px 10px;
+  width: 250px;
+}
+
+/* Responsive admin */
+@media screen and (max-width: 782px) {
+  .themoak-tryon-products-table .column-actions {
+    width: auto;
+  }
+
+  .column-enabled,
+  .column-image {
+    display: table-cell !important;
+  }
+
+  .instruction-field {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .instruction-field label {
+    margin-bottom: 5px;
+  }
+}
+/* Add to your admin.css file */
+.themoak-modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.themoak-modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.themoak-modal-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.themoak-modal-close:hover,
+.themoak-modal-close:focus {
+  color: black;
+  text-decoration: none;
+}
+
+.submit-buttons {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.submit-buttons .button {
+  margin-left: 10px;
+}
+
+#themoak-adjustments-form .form-table th {
+  width: 200px;
+}
