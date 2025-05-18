@@ -281,10 +281,6 @@ class TheMoak_Tryon_Frontend {
             'shadowOffset' => $this->get_product_meta_value($product_id, '_themoak_tryon_shadow_offset', 10)
         );
         
-        // Debug log
-        error_log('Product ID: ' . $product_id);
-        error_log('Product settings: ' . print_r($product_settings, true));
-        
         wp_send_json_success(array(
             'product_id' => $product_id,
             'product_name' => $product_name,
@@ -296,16 +292,10 @@ class TheMoak_Tryon_Frontend {
 
     /**
      * Helper function to get product meta value with default fallback
-     * Make sure we return numeric values for settings
      */
     private function get_product_meta_value($product_id, $meta_key, $default_value) {
         $value = get_post_meta($product_id, $meta_key, true);
-        // Return default if empty
-        if ($value === '') {
-            return $default_value;
-        }
-        // Convert to float to ensure numerical values
-        return floatval($value);
+        return $value !== '' ? $value : $default_value;
     }
 
     /**

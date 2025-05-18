@@ -258,18 +258,4 @@ jQuery(document).ready(function ($) {
       },
     });
   });
-  // ADD THE DEBUGGING CODE RIGHT HERE, before the final closing bracket
-  // Debugging for adjustment modal
-  $('#themoak-adjustments-form').on('submit', function () {
-    console.log('Submitting adjustment form with data:');
-    var formData = $(this).serialize();
-    console.log(formData);
-
-    // Log each field value
-    $(this)
-      .find('input[type="number"]')
-      .each(function () {
-        console.log($(this).attr('name') + ': ' + $(this).val());
-      });
-  });
 });

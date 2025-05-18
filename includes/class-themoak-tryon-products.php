@@ -391,7 +391,7 @@ class TheMoak_Tryon_Products {
         exit;
     }
 
-   /**
+    /**
      * AJAX disable product
      */
     public function ajax_disable_product() {
@@ -439,8 +439,8 @@ class TheMoak_Tryon_Products {
         $image_id = isset($_POST['image_id']) ? absint($_POST['image_id']) : 0;
         $image_url = isset($_POST['image_url']) ? esc_url_raw($_POST['image_url']) : '';
         
-        if (!$product_id) {
-            wp_send_json_error(array('message' => __('Invalid product ID.', 'themoak-virtual-tryon')));
+        if (!$product_id || !$image_id || !$image_url) {
+            wp_send_json_error(array('message' => __('Invalid data.', 'themoak-virtual-tryon')));
             exit;
         }
         
@@ -475,16 +475,16 @@ class TheMoak_Tryon_Products {
             exit;
         }
         
-        // Get current adjustment values with proper defaults
+        // Get current adjustment values - use the form field names as keys
         $adjustments = array(
-            'position_y' => get_post_meta($product_id, '_themoak_tryon_position_y', true) ?: '-4',
-            'position_x' => get_post_meta($product_id, '_themoak_tryon_position_x', true) ?: '-2',
-            'size_scale' => get_post_meta($product_id, '_themoak_tryon_size_scale', true) ?: '0.9',
-            'reflection_pos' => get_post_meta($product_id, '_themoak_tryon_reflection_pos', true) ?: '8',
-            'reflection_size' => get_post_meta($product_id, '_themoak_tryon_reflection_size', true) ?: '0.5',
-            'reflection_opacity' => get_post_meta($product_id, '_themoak_tryon_reflection_opacity', true) ?: '0.7',
-            'shadow_opacity' => get_post_meta($product_id, '_themoak_tryon_shadow_opacity', true) ?: '0.4',
-            'shadow_offset' => get_post_meta($product_id, '_themoak_tryon_shadow_offset', true) ?: '10',
+            'position_y' => get_post_meta($product_id, '_themoak_tryon_position_y', true),
+            'position_x' => get_post_meta($product_id, '_themoak_tryon_position_x', true),
+            'size_scale' => get_post_meta($product_id, '_themoak_tryon_size_scale', true),
+            'reflection_pos' => get_post_meta($product_id, '_themoak_tryon_reflection_pos', true),
+            'reflection_size' => get_post_meta($product_id, '_themoak_tryon_reflection_size', true),
+            'reflection_opacity' => get_post_meta($product_id, '_themoak_tryon_reflection_opacity', true),
+            'shadow_opacity' => get_post_meta($product_id, '_themoak_tryon_shadow_opacity', true),
+            'shadow_offset' => get_post_meta($product_id, '_themoak_tryon_shadow_offset', true),
         );
         
         wp_send_json_success($adjustments);
@@ -515,10 +515,6 @@ class TheMoak_Tryon_Products {
             exit;
         }
         
-        // Debug output
-        error_log('Saving product adjustments for product ID: ' . $product_id);
-        error_log('POST data: ' . print_r($_POST, true));
-        
         // Save adjustment settings
         $adjustment_fields = array(
             '_themoak_tryon_position_y' => 'floatval',
@@ -534,10 +530,6 @@ class TheMoak_Tryon_Products {
         foreach ($adjustment_fields as $field => $sanitize_func) {
             if (isset($_POST[$field]) && $_POST[$field] !== '') {
                 $value = call_user_func($sanitize_func, $_POST[$field]);
-                
-                // Debug output
-                error_log("Setting $field to $value");
-                
                 update_post_meta($product_id, $field, $value);
             } else {
                 // Delete the meta if it's empty (to use default)
